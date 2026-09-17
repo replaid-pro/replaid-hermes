@@ -11,7 +11,7 @@ You need Hermes Agent, a Replaid account, and a connected channel. Use the **sam
 For the default profile:
 
 ```bash
-hermes --profile default plugins install ricki-io/replaid-hermes --no-enable
+hermes --profile default plugins install replaid-pro/replaid-hermes --no-enable
 hermes --profile default plugins enable replaid
 hermes --profile default replaid setup
 ```
