@@ -26,5 +26,7 @@ jobs:
         env:
           HERMES_HOME: ${{ runner.temp }}/replaid-validation
         run: |
-          hermes plugins doctor . --ci
-          hermes plugins validate . --json
+          mkdir -p "$RUNNER_TEMP/replaid-package"
+          git archive HEAD | tar -x -C "$RUNNER_TEMP/replaid-package"
+          hermes plugins doctor "$RUNNER_TEMP/replaid-package" --ci
+          hermes plugins validate "$RUNNER_TEMP/replaid-package" --json
