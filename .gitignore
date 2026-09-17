@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+.hermes/
+config.yaml
+mcp-tokens/
+*.db
+*.log
+.DS_Store
+.ci-hermes/

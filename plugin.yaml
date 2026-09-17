@@ -1,0 +1,8 @@
+name: replaid
+version: 0.2.0
+description: Connect Replaid with OAuth, check setup, and manage your social inbox.
+author: Replaid
+provides_tools:
+  - replaid_connection_status
+provides_hooks: []
+capabilities: []
