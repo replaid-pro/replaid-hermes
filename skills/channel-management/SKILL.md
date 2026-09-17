@@ -27,8 +27,8 @@ Report `disconnected` only after a successful result. On failure, report the ret
 
 ## Tool boundaries
 
-These changes use dedicated channel tools, not `execute_action`. If a tool is unavailable or access is denied, report that limit without trying another team's credentials or a conversation action. Inbox reading and replies belong to `social-inbox`.
+These changes use dedicated channel tools, not `execute_action`. If a tool is unavailable or access is denied, report that limit without trying another team's credentials or a conversation action. Inbox reading and replies belong to `replaid:social-inbox`.
 
 For results, identify the provider and account when available, the confirmed status, and any browser approval still required.
 
-In Hermes, use `skills_list` to find sibling skills in this plugin and `skill_view` to read their full namespaced names.
+In Hermes, load this skill as `replaid:channel-management`. Use `skills_list` to discover the full names of plugin skills; never remove the `replaid:` prefix.

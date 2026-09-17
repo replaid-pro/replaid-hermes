@@ -44,13 +44,14 @@ hermes --profile default replaid check
 
 Setup preserves existing settings. It stops if `replaid` names another endpoint, is disabled, uses custom authentication headers, or excludes the required inbox tools. Review those settings in Hermes rather than overwriting them. If the existing connection has expired credentials, use `hermes --profile default mcp login replaid`, then run the check again.
 
-An enabled plugin and a saved OAuth token do not by themselves prove that a connection exists. If a chat searches files or other services instead of Replaid, check the selected profile and start a new conversation after setup.
+An enabled plugin and a saved OAuth token do not by themselves prove that a connection exists. If a chat searches files or other services instead of Replaid, check the selected profile. After plugin updates, restart that profile's Hermes backend and start a new conversation. A terminal connection test does not refresh an existing chat's tool list. The `replaid_connection_status` tool distinguishes saved settings from registered runtime tools and provides recovery steps. Plugin skills require their full `replaid:` names; bare names do not load them.
 
 ## What is installed
 
 - A `hermes replaid setup|status|check` command.
 - A read-only `replaid_connection_status` tool, which checks local settings.
-- Three skills: social inbox, channel management, and team/webhooks.
+- Three skills: `replaid:social-inbox`, `replaid:channel-management`, and `replaid:team-and-webhooks`.
+- A request hook that supplies these names when the user mentions Replaid. It does not change unrelated requests.
 - An OAuth MCP connection to `https://mcp.replaid.pro`, created only when setup is explicitly run.
 
 Registration does not connect or change settings. Setup does not send messages or create drafts. The remote MCP server provides the Replaid tools; this repository contains no Replaid backend implementation, credentials, or customer data. Hermes stores OAuth tokens in the selected profile, outside the plugin folder. Removing the plugin does not revoke OAuth or remove the separately configured MCP connection.

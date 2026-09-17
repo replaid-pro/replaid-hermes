@@ -27,6 +27,6 @@ Use the dedicated Replaid MCP tools, not `execute_action`. Management writes req
 
 Creating a subscription does not configure or test the receiver. Report the saved URL, events, and active state separately from any delivery evidence. For uncertain write results, inspect existing subscriptions before retrying to avoid duplicates.
 
-Channel approval links and disconnections belong to `channel-management`. Conversation replies and action execution belong to `social-inbox`. If a required tool is unavailable or access is denied, report the limit without substituting unrelated tools.
+Channel approval links and disconnections belong to `replaid:channel-management`. Conversation replies and action execution belong to `replaid:social-inbox`. If a required tool is unavailable or access is denied, report the limit without substituting unrelated tools.
 
-In Hermes, use `skills_list` to find sibling skills in this plugin and `skill_view` to read their full namespaced names.
+In Hermes, load this skill as `replaid:team-and-webhooks`. Use `skills_list` to discover the full names of plugin skills; never remove the `replaid:` prefix.

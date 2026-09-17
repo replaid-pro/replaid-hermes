@@ -28,6 +28,13 @@ class HermesHost:
     def read(self):
         return self.api._get_mcp_servers().get(SERVER)
 
+    def runtime(self):
+        from tools.mcp_tool_discovery import get_mcp_status
+
+        entries = get_mcp_status()
+        entry = next((item for item in entries if item.get("name") == SERVER), {})
+        return {"status": entry.get("status", "unavailable"), "tools": entry.get("tools", 0)}
+
     def save(self, config):
         if not self.api._save_mcp_server(SERVER, config):
             raise SetupError("Hermes did not save the Replaid connection.")
@@ -100,11 +107,31 @@ def setup(host):
     return check(host, interactive=True)
 
 
+def runtime_status(host):
+    result = status(host)
+    result["skills"] = ["replaid:social-inbox", "replaid:channel-management", "replaid:team-and-webhooks"]
+    result["runtime_tools_available"] = False
+    if not result["configured"]:
+        return result
+    try:
+        runtime = host.runtime()
+        count = int(runtime.get("tools", 0))
+        result["runtime_tools_available"] = runtime.get("status") in {"connected", "lazy"} and count > 0
+        result["runtime_tool_count"] = count
+    except Exception:
+        result["runtime_tool_count"] = 0
+    if result["runtime_tools_available"]:
+        result["next_step"] = "Load replaid:social-inbox and search for the Replaid MCP tools. If tool_search cannot find them in this chat, start a new session in the same profile."
+    else:
+        result["next_step"] = "Settings are saved, but Replaid tools are not available in this runtime. Restart the Hermes backend for this profile, then start a new session. If tools are still absent, run hermes replaid check in the same profile. Do not write scripts or access OAuth files to replace missing tools."
+    return result
+
+
 def connection_status(args, **kwargs):
     try:
-        result = status(HermesHost())
+        result = runtime_status(HermesHost())
     except Exception:
-        result = {"configured": False, "message": "Replaid setup could not be checked. Run hermes replaid status in the same profile."}
+        result = {"configured": False, "runtime_tools_available": False, "message": "Replaid setup could not be checked. Run hermes replaid status in the same profile."}
     return json.dumps(result)
 
 

@@ -44,6 +44,6 @@ For read requests, identify the conversation by contact, channel, numeric ID, an
 
 For conversation changes, state the destination and confirmed result. Include the exact message for replies and saved drafts. Report pending or failed execution as such; use `get_action_execution` to check a returned execution ID when needed.
 
-Channel connections and disconnections use the `channel-management` skill. Team settings, invitations, and webhook subscriptions use `team-and-webhooks`. Those operations use dedicated MCP tools, not conversation actions.
+Channel connections and disconnections use the `replaid:channel-management` skill. Team settings, invitations, and webhook subscriptions use `replaid:team-and-webhooks`. Those operations use dedicated MCP tools, not conversation actions.
 
-In Hermes, use `skills_list` to find sibling skills in this plugin and `skill_view` to read their full namespaced names.
+In Hermes, load this skill as `replaid:social-inbox`. Use `skills_list` to discover the full names of plugin skills; never remove the `replaid:` prefix.
